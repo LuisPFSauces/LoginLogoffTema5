@@ -7,6 +7,11 @@ $errores = Array(
     "password" => null,
     "login" => null
 );
+session_start();
+if(isset($_SESSION['usuario'])){
+    header("Location: codigoPHP/Programa.php");
+}
+
 $entradaOk = true;
 if (isset($_REQUEST['login'])) {
     $errores["usuario"] = validacionFormularios::comprobarNoVacio($_REQUEST['usuario']);
@@ -35,20 +40,27 @@ if (isset($_REQUEST['login'])) {
     $entradaOk = false;
 }
 if ($entradaOk) {
-    session_start();
     $_SESSION['usuario'] = $_REQUEST['usuario'];
     $usuario = $consulta->fetchObject();
     $_SESSION['FechaHoraUltimaConexion'] = $usuario->FechaHoraUltimaConexion;
     $timeStamp = (new DateTime())->getTimestamp();
     $sql = <<<EOF
-          Update Usuarios set 
+          Update Usuario set 
           FechaHoraUltimaConexion = :fecha,
           NumConexiones = NumConexiones + 1
           where CodUsuario = :usuario;
     EOF;
     $consulta = $miDB ->prepare($sql);
-    $consulta ->execute(Array(":fecha" => $timeStamp, ":usuario" => $_SESSION['usuario']));
-    header("Location: codigoPHP/Programa.php");
+    $ejecucion = $consulta ->execute(Array(":fecha" => $timeStamp, ":usuario" => $_SESSION['usuario']));
+    
+    if($ejecucion){
+        unset($miDB);
+        header("Location: codigoPHP/Programa.php");
+        die();
+    } else {
+        echo "<p>Error al hacer la busqueda \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1]."</p>";
+        unset($miDB);
+    }
 } else {
     ?>
     <!DOCTYPE html>
