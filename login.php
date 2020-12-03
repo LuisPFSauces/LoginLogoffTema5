@@ -33,7 +33,6 @@ if (isset($_REQUEST['login'])) {
     foreach ($errores as $error) {
         if (!is_null($error)) {
             $entradaOk = false;
-            unset($miDB);
         }
     }
 } else {
@@ -52,16 +51,16 @@ if ($entradaOk) {
 EOF;
     $consulta = $miDB->prepare($sql);
     $ejecucion = $consulta->execute(Array(":fecha" => $timeStamp, ":usuario" => $_SESSION['usuario']));
-
+    unset($miDB);
     if ($ejecucion) {
-        unset($miDB);
         header("Location: codigoPHP/Programa.php");
         die();
     } else {
         echo "<p>Error al hacer la busqueda \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1] . "</p>";
-        unset($miDB);
+        
     }
 } else {
+    unset($miDB);
     ?>
     <!DOCTYPE html>
     <html>
@@ -78,11 +77,12 @@ EOF;
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                 <input type="text" placeholder="Usuario" name="usuario" value="<?php echo isset($_REQUEST["usuario"]) ? $_REQUEST['usuario'] : ""; ?>">
                 <?php echo!empty($errores['usuario']) ? "<span class=\"error\">" . $errores['usuario'] . "</span>" : ""; ?><br>
-                <input type="password" placeholder="Contraseña" name="password">
+                <input type="password" placeholder="Contraseña" name="password" >
                 <?php echo!empty($errores['password']) ? "<span class=\"error\">" . $errores['password'] . "</span>" : ""; ?><br>
                 <?php echo!empty($errores['login']) ? "<span class=\"error\">" . $errores['login'] . "</span>" : ""; ?><br>
                 <input type="submit" name="login" value="aceptar">
             </form>
+            <a href="codigoPHP/Registro.php">¿No tienes cuenta?<br>Registrate</a>
             <?php ?>
         </body>
     </html>
