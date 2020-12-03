@@ -4,7 +4,9 @@ $lenguaje = Array(
     "en" => "Hi",
     "pr" => "Oi",
     "it" => "Ciao",
-    "ge" => "Hallo"
+    "ge" => "Hallo",
+    "bi" => "01001000 01101111 01101100 01100001",
+    "hx" => "486f6c61"
 );
 session_start();
 if (!isset($_SESSION['usuario'])) {
@@ -14,6 +16,12 @@ if (!isset($_SESSION['usuario'])) {
 if(isset($_REQUEST['cerrar'])){
     session_destroy();
     header("Location: ../../indexProyectoDWES.php");
+}
+
+if(!isset($_COOKIE['idioma'])){
+    $idioma = "es";
+} else {
+    $idioma = $_COOKIE['idioma'];
 }
 
 if (isset($_REQUEST["idioma"])) {
@@ -40,7 +48,7 @@ if (isset($_REQUEST["idioma"])) {
             $ejecucion = $consula->execute(Array(":codigo" => $usuario));
             if ($ejecucion){
                 $Ousuario = $consula ->fetchObject();
-                echo "<p>".$lenguaje[$_COOKIE['idioma']] . " " . $Ousuario -> DescUsuario."</p>";
+                echo "<p>".$lenguaje[$idioma] . " " . $Ousuario -> DescUsuario."</p>";
                 if( $_SESSION['FechaHoraUltimaConexion'] != null){
                     echo "<p>Te has conectado ".$Ousuario -> NumConexiones ." veces</p>";
                     $fecha = (new DateTime) ->setTimestamp($_SESSION['FechaHoraUltimaConexion']);
@@ -68,9 +76,10 @@ if (isset($_REQUEST["idioma"])) {
                 <option value="pr" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "pr") ? "selected" : ""; ?> >Português</option>
                 <option value="it" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "it") ? "selected" : ""; ?> >Italiano</option>
                 <option value="ge" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "ge") ? "selected" : ""; ?> >Aleman</option>
+                <option value="bi" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "bi") ? "selected" : ""; ?> >Binario</option>
+                <option value="hx" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "hx") ? "selected" : ""; ?> >Hexadecimal</option>
             </select>
             <input type="submit" value="Cerrar Sesión" name="cerrar">
         </form>
-<?php ?>
     </body>
 </html>

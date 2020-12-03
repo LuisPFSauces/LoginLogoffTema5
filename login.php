@@ -8,7 +8,7 @@ $errores = Array(
     "login" => null
 );
 session_start();
-if(isset($_SESSION['usuario'])){
+if (isset($_SESSION['usuario'])) {
     header("Location: codigoPHP/Programa.php");
 }
 
@@ -23,7 +23,7 @@ if (isset($_REQUEST['login'])) {
         $ejecucion = $consulta->execute(Array(":codigo" => $_REQUEST['usuario'], ":password" => hash("sha256", $_REQUEST['usuario'] . $_REQUEST['password'])));
         if ($consulta->rowCount() == 0) {
             $errores['login'] = "Credenciales incorrectas";
-        } else if(!$ejecucion){
+        } else if (!$ejecucion) {
             throw new Exception("Error al recuperar los usuarios \"" . $departamentos->errorInfo()[2] . "\"", $departamentos->errorInfo()[1]);
         }
     } catch (Exception $e) {
@@ -45,20 +45,20 @@ if ($entradaOk) {
     $_SESSION['FechaHoraUltimaConexion'] = $usuario->FechaHoraUltimaConexion;
     $timeStamp = (new DateTime())->getTimestamp();
     $sql = <<<EOF
-          Update Usuario set 
-          FechaHoraUltimaConexion = :fecha,
-          NumConexiones = NumConexiones + 1
-          where CodUsuario = :usuario;
-    EOF;
-    $consulta = $miDB ->prepare($sql);
-    $ejecucion = $consulta ->execute(Array(":fecha" => $timeStamp, ":usuario" => $_SESSION['usuario']));
-    
-    if($ejecucion){
+    Update Usuario set 
+    FechaHoraUltimaConexion = :fecha,
+    NumConexiones = NumConexiones + 1
+    where CodUsuario = :usuario;
+EOF;
+    $consulta = $miDB->prepare($sql);
+    $ejecucion = $consulta->execute(Array(":fecha" => $timeStamp, ":usuario" => $_SESSION['usuario']));
+
+    if ($ejecucion) {
         unset($miDB);
         header("Location: codigoPHP/Programa.php");
         die();
     } else {
-        echo "<p>Error al hacer la busqueda \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1]."</p>";
+        echo "<p>Error al hacer la busqueda \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1] . "</p>";
         unset($miDB);
     }
 } else {
@@ -76,9 +76,9 @@ if ($entradaOk) {
         </head>
         <body>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                <input type="text" name="usuario" value="<?php echo isset($_REQUEST["usuario"]) ? $_REQUEST['usuario'] : ""; ?>">
+                <input type="text" placeholder="Usuario" name="usuario" value="<?php echo isset($_REQUEST["usuario"]) ? $_REQUEST['usuario'] : ""; ?>">
                 <?php echo!empty($errores['usuario']) ? "<span class=\"error\">" . $errores['usuario'] . "</span>" : ""; ?><br>
-                <input type="password" name="password">
+                <input type="password" placeholder="Contraseña" name="password">
                 <?php echo!empty($errores['password']) ? "<span class=\"error\">" . $errores['password'] . "</span>" : ""; ?><br>
                 <?php echo!empty($errores['login']) ? "<span class=\"error\">" . $errores['login'] . "</span>" : ""; ?><br>
                 <input type="submit" name="login" value="aceptar">
