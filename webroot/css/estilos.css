@@ -1,8 +1,3 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
     Created on : 21 nov. 2020, 18:16:51
     Author     : Luis
@@ -51,16 +46,30 @@ input:read-only{
     width: auto;
 }
 
+.boton{
+    background-color: transparent;
+    border: 2px solid black;
+    padding: 5px;
+    margin-top: 15px;
+    border-radius: 2px;
+    color: black;
+}
+
+.opciones{
+    position: relative;
+    left: 40%;
+}
+
 .bien{
     background-color: #13b08c;
     color: white;
 }
 
-
 .mal{
     background-color: #cc0033;
     color: white;
 }
+
 @media screen and (min-width: 2270px) {
     form{
         width: 20%;

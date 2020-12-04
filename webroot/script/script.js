@@ -30,9 +30,28 @@ function comprobarPassword(elemento) {
 function comprobarPassword2(elemento) {
     var password2 = elemento.value;
     var password = document.getElementById("contrasena").value;
-    if (password != password2) {
+    if (password !== password2) {
         elemento.className = "mal";
-    } else {
+    } else if (password2 !== "") {
         elemento.className = "bien";
     }
+}
+
+function comprobarFichero(elemento) {
+    var fichero = elemento.value;
+    if (fichero.length) {
+        var extension = fichero.split(".").pop();
+        var regex = new RegExp("(svg|png|jpeg|jpg)");
+        var buton = document.getElementById("subir");
+        if (!regex.test(extension)) {
+            buton.className = "boton mal";
+        } else {
+            buton.className = "boton bien";
+        }
+    }
+}
+
+function borrarImagen(elemento){
+    elemento.className = "boton";
+    elemento.value = "";
 }
