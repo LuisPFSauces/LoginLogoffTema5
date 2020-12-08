@@ -70,6 +70,18 @@ input:read-only{
     color: white;
 }
 
+#subirImg{
+    height: 100px;
+    width: 100px;
+}
+
+
+.editar{
+    top: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
 @media screen and (min-width: 2270px) {
     form{
         width: 20%;

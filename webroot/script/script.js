@@ -41,7 +41,7 @@ function comprobarFichero(elemento) {
     var fichero = elemento.value;
     if (fichero.length) {
         var extension = fichero.split(".").pop();
-        var regex = new RegExp("(svg|png|jpeg|jpg)");
+        var regex = new RegExp("(png|jpeg|jpg)");
         var buton = document.getElementById("subir");
         if (!regex.test(extension)) {
             buton.className = "boton mal";
@@ -51,7 +51,11 @@ function comprobarFichero(elemento) {
     }
 }
 
+function comprobarFichero2(elemento){
+    
+}
+
 function borrarImagen(elemento){
     elemento.className = "boton";
-    elemento.value = "";
+    document.getElementById("fichero").value = "";
 }
