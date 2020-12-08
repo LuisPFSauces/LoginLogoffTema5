@@ -10,6 +10,10 @@ if (isset($_REQUEST['cerrar'])) {
     header("Location: ../../indexProyectoDWES.php");
 }
 
+if (isset($_REQUEST['editar'])){
+    header("Location: Editar.php");
+}
+
 $lenguaje = Array(
     "es" => "Hola",
     "en" => "Hi",
@@ -70,6 +74,7 @@ if (isset($_REQUEST["idioma"])) {
                         <option value="bi" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "bi") ? "selected" : ""; ?> >Binario</option>
                         <option value="hx" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "hx") ? "selected" : ""; ?> >Hexadecimal</option>
                     </select>
+                    <input type="submit" value="Editar" name="editar">
                     <input type="submit" value="Cerrar Sesión" name="cerrar">
                 </form>
                 <?php echo "</div>\n"; ?>
