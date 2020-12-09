@@ -70,16 +70,77 @@ input:read-only{
     color: white;
 }
 
-#subirImg{
-    height: 100px;
-    width: 100px;
-}
-
-
 .editar{
     top: 15%;
     display: flex;
     flex-direction: column;
+}
+
+#subirImg{
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    z-index: 10;
+    position: relative;
+    top: 5%;
+    left: 5%;
+    cursor: pointer;
+}
+
+.imagen{
+    height: 115px;
+    width: 115px;
+    border-radius: 60px;
+    position: relative;
+    border: 2.5px solid red;
+    z-index:  100;
+}
+
+.imagen .cerrar{
+    background-color: red;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 16px;
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    opacity: 0;
+}
+
+.imagen .textoInf{
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+    text-align: center;
+    background-color: rgb(1, 1, 1);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    font-size: .75em;
+    height: 50px;
+    width: 100px;
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    opacity: 0;
+}
+
+.imagen:hover .textoInf{
+    opacity: 1;
+}
+.imagen:hover .cerrar{
+    opacity: 1;
+
+}
+
+.imagen:hover .cerrar:hover{
+    background-color: #13b08c;
 }
 
 @media screen and (min-width: 2270px) {

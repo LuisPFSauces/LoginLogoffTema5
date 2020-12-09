@@ -42,20 +42,38 @@ function comprobarFichero(elemento) {
     if (fichero.length) {
         var extension = fichero.split(".").pop();
         var regex = new RegExp("(png|jpeg|jpg)");
-        var buton = document.getElementById("subir");
+        var boton = document.getElementById("subir");
         if (!regex.test(extension)) {
-            buton.className = "boton mal";
+            boton.className = "boton mal";
         } else {
-            buton.className = "boton bien";
+            boton.className = "boton bien";
         }
     }
 }
 
 function comprobarFichero2(elemento){
+     var fichero = elemento.value;
+    if (fichero.length) {
+        var extension = fichero.split(".").pop();
+        var regex = new RegExp("(png|jpeg|jpg)");
+        var marco = document.getElementById("subirImg");
+        if (regex.test(extension)) {
+            marco.src = window.URL.createObjectURL(elemento.files[0]);
+        } else {
+            marco.src = "../webroot/images/perfil.jpg";
+        }
+    }
     
 }
 
 function borrarImagen(elemento){
     elemento.className = "boton";
     document.getElementById("fichero").value = "";
+}
+
+function borrar(){
+    var archivo = document.getElementById("imgPerfil");
+    var marco = document.getElementById("subirImg");
+    archivo.value = borrar;
+    marco.src = "../webroot/images/perfil.jpg";
 }

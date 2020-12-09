@@ -12,6 +12,11 @@ if (isset($_REQUEST["cambiar"])){
     
 }
 
+$formulario = [
+    "descripcion" => null,
+    "imgPerfil" => null,
+];
+
 require_once '../config/confDBPDO.php';
 require_once '../core/libreriaValidacion.php';
 $entradaOk = true;
@@ -26,6 +31,18 @@ if (isset($_REQUEST['aceptar'])) {
         $entradaOk = false;
         $_REQUEST['descripcion'] = "";
     }
+    
+    if (!empty($_FILES['imgPerfil']['tmp_name'])) {
+            if ($_FILES['imgPerfil']['size'] < 5242880) {
+                if (!in_array(exif_imagetype($_FILES['imgPerfil']['tmp_name']), $tipos_permitidos)) {
+                    $errores['imgPerfil'] = "El formato del fichero no esta permitido. Introduce un JPG, PNG o JPEG";
+                } else {
+                    $formulario["imgPerfil"] = file_get_contents($_FILES['imgPerfil']['tmp_name']);
+                }
+            } else {
+                $errores['imgPerfil'] = "El tamaño de la imagen no puede ser superior a 5MB";
+            }
+        }
 } else {
     $entradaOk = false;
 }
@@ -37,7 +54,12 @@ try {
 }
 
 if ($entradaOk) {
-    
+   /*$formulario['descripcion'] = $_REQUEST['descripcion'];
+   $sql = <<< SQL
+   Update Usuario set 
+           DescUsuario = :descripcion
+SQL;*/
+    echo $_FILES['imgPerfil'];
 } else {
     $consulta = $miDB->prepare("Select * from Usuario where CodUsuario = :codigo limit 1");
     $consulta->bindParam(":codigo", $_SESSION['usuario']);
@@ -57,12 +79,20 @@ if ($entradaOk) {
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="editar">
                     <?php
                     if (!is_null($Ousuario->ImagenUsuario)) {
-                        echo '<img id="subirImg" src="data:image/png;base64,' . base64_encode($Ousuario->ImagenUsuario) . '" onclick="document.getElementById(\'imgPerfil\').click()"/>' . "\n";
+                        echo "<div class=\"imagen\">";
+                        echo "\t".'<img id="subirImg" src="data:image/png;base64,' . base64_encode($Ousuario->ImagenUsuario) . '" onclick="document.getElementById(\'imgPerfil\').click()"/>' . "\n";
+                        echo "<span class=\"cerrar\">X</span>";
+                        echo '<span class="textoInf" onclick="document.getElementById(\'imgPerfil\').click()" >Selecionar imagen de perfil</span>';
+                        echo "</div>";
                     } else {
-                        echo '<img id="subirImg" src="../webroot/images/perfil.jpg" onclick="document.getElementById(\'imgPerfil\').click()"/>'."\n";
+                        echo "<div class=\"imagen\">";
+                        echo "\t".'<img id="subirImg" src="../webroot/images/perfil.jpg" onclick="document.getElementById(\'imgPerfil\').click()"/>'."\n";
+                        echo '<span class="cerrar" onclick="borrar()">X</span>';
+                        echo '<span class="textoInf" onclick="document.getElementById(\'imgPerfil\').click()" >Selecionar imagen de perfil</span>';
+                        echo "</div>";
                     }
                     ?><br>
-                    <input type="file" hidden id="sub" onchange="comprobarFichero(this)">
+                    <input type="file" hidden id="imgPerfil" name="imgPerfil" onchange="comprobarFichero2(this)">
                     <label for="usuario">Usuario</label>
                     <input type="text" id="usuario" readonly name="Usuario" value="<?php echo $Ousuario -> CodUsuario ?>"><br>
                     <label for="usuario">Descripción</label>
