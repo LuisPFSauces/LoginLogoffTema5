@@ -25,9 +25,7 @@ $lenguaje = Array(
 );
 
 if (!isset($_COOKIE['idioma'])) {
-    $idioma = "es";
-} else {
-    $idioma = $_COOKIE['idioma'];
+    setcookie("idioma", "es", time() + (60 * 60 * 24 * 30));
 }
 
 if (isset($_REQUEST["idioma"])) {
@@ -57,22 +55,22 @@ if (isset($_REQUEST["idioma"])) {
                 if (!is_null($Ousuario->ImagenUsuario)) {
                     echo '<img id="imgPerfil" src="data:image/png;base64,' . base64_encode($Ousuario->ImagenUsuario) . '"/>' . "\n";
                 } else {
-                    echo '<img id="imgPerfil" src="../webroot/images/perfil.jpg"/>\n';
+                    echo '<img id="imgPerfil" src="../webroot/images/perfil.jpg"/>'."\n";
                 }
                 ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype = "multipart/form-data">
                     <select name="idioma" id="idioma" onchange="this.form.submit()">
                         <option value="es" <?php
-                        if (!isset($_COOKIE['idioma']) || (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "es")) {
+                        if ($_COOKIE['idioma'] == "es") {
                             echo "selected";
                         }
                         ?>>Español</option>
-                        <option value="en" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "en") ? "selected" : ""; ?>>English</option>
-                        <option value="pr" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "pr") ? "selected" : ""; ?> >Português</option>
-                        <option value="it" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "it") ? "selected" : ""; ?> >Italiano</option>
-                        <option value="ge" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "ge") ? "selected" : ""; ?> >Aleman</option>
-                        <option value="bi" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "bi") ? "selected" : ""; ?> >Binario</option>
-                        <option value="hx" <?php echo (isset($_COOKIE['idioma']) && $_COOKIE['idioma'] == "hx") ? "selected" : ""; ?> >Hexadecimal</option>
+                        <option value="en" <?php echo ($_COOKIE['idioma'] == "en") ? "selected" : ""; ?>>English</option>
+                        <option value="pr" <?php echo ($_COOKIE['idioma'] == "pr") ? "selected" : ""; ?> >Português</option>
+                        <option value="it" <?php echo ($_COOKIE['idioma'] == "it") ? "selected" : ""; ?> >Italiano</option>
+                        <option value="ge" <?php echo ($_COOKIE['idioma'] == "ge") ? "selected" : ""; ?> >Aleman</option>
+                        <option value="bi" <?php echo ($_COOKIE['idioma'] == "bi") ? "selected" : ""; ?> >Binario</option>
+                        <option value="hx" <?php echo ($_COOKIE['idioma'] == "hx") ? "selected" : ""; ?> >Hexadecimal</option>
                     </select>
                     <input type="submit" value="Editar" name="editar">
                     <input type="submit" value="Cerrar Sesión" name="cerrar">
@@ -80,7 +78,7 @@ if (isset($_REQUEST["idioma"])) {
                 <?php echo "</div>\n"; ?>
                 <main>
                     <?php
-                    echo "<p>" . $lenguaje[$idioma] . " " . $Ousuario->DescUsuario . "</p>\n";
+                    echo "<p>" . $lenguaje[$_COOKIE["idioma"]] . " " . $Ousuario->DescUsuario . "</p>\n";
                     if ($_SESSION['FechaHoraUltimaConexion'] != null) {
                         echo "<p>Te has conectado " . $Ousuario->NumConexiones . " veces</p>\n";
                         $fecha = (new DateTime)->setTimestamp($_SESSION['FechaHoraUltimaConexion']);

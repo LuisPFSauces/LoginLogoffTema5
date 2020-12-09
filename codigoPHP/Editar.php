@@ -20,7 +20,7 @@ $errores = array(
     "conexion" => null
 );
 
-if (isset($_REQUEST['enviar'])) {
+if (isset($_REQUEST['aceptar'])) {
     $errores['descripcion'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 25, 3, 1);
     if (!empty($errores['descripcion'])) {
         $entradaOk = false;
@@ -59,7 +59,7 @@ if ($entradaOk) {
                     if (!is_null($Ousuario->ImagenUsuario)) {
                         echo '<img id="subirImg" src="data:image/png;base64,' . base64_encode($Ousuario->ImagenUsuario) . '" onclick="document.getElementById(\'imgPerfil\').click()"/>' . "\n";
                     } else {
-                        echo '<img id="subirImg" src="../webroot/images/perfil.jpg" onclick="document.getElementById(\'imgPerfil\').click()"/>\n';
+                        echo '<img id="subirImg" src="../webroot/images/perfil.jpg" onclick="document.getElementById(\'imgPerfil\').click()"/>'."\n";
                     }
                     ?><br>
                     <input type="file" hidden id="sub" onchange="comprobarFichero(this)">
