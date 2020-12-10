@@ -56,7 +56,7 @@ try {
         $formulario['descripcion'] = $_REQUEST['descripcion'];
         $sql = "Update Usuario set DescUsuario = :descripcion";
         if (!is_null($formulario["imgPerfil"])) {
-            $sql .= "ImagenUsuario = :imagen where CodUsuario = :usuario";
+            $sql .= ", ImagenUsuario = :imagen where CodUsuario = :usuario";
             echo $sql;
             $consulta = $miDB->prepare($sql);
             $ejecucion = $consulta->execute([":descripcion" => $formulario['descripcion'], ":imagen" => $formulario['imgPerfil'], ":usuario" => $_REQUEST['usuario']]);
