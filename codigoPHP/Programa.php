@@ -91,6 +91,7 @@ if (isset($_REQUEST["idioma"])) {
                 }
             } catch (Exception $e) {
                 echo "<p class=\"error\" >Se ha producido un error al conectar con la base de datos( " . $e->getMessage() . ", " . $e->getCode() . ")</p>";
+                die();
             }
             ?>
         </main>

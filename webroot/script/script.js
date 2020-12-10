@@ -41,7 +41,7 @@ function comprobarFichero(elemento) {
     var fichero = elemento.value;
     if (fichero.length) {
         var extension = fichero.split(".").pop();
-        var regex = new RegExp("(png|jpeg|jpg)");
+        var regex = new RegExp("(png|jpeg|jpg)", "i");
         var boton = document.getElementById("subir");
         if (!regex.test(extension)) {
             boton.className = "boton mal";
@@ -55,7 +55,7 @@ function comprobarFichero2(elemento){
      var fichero = elemento.value;
     if (fichero.length) {
         var extension = fichero.split(".").pop();
-        var regex = new RegExp("(png|jpeg|jpg)");
+        var regex = new RegExp("(png|jpeg|jpg)", "i");
         var marco = document.getElementById("subirImg");
         if (regex.test(extension)) {
             marco.src = window.URL.createObjectURL(elemento.files[0]);
@@ -74,6 +74,6 @@ function borrarImagen(elemento){
 function borrar(){
     var archivo = document.getElementById("imgPerfil");
     var marco = document.getElementById("subirImg");
-    archivo.value = borrar;
+    archivo.value = "";
     marco.src = "../webroot/images/perfil.jpg";
 }

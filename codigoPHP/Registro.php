@@ -25,8 +25,9 @@ $entradaOk = true;
 
 if (isset($_REQUEST["aceptar"])) {
 
-    $miDB = new PDO(DSN, USER, PASSWORD);
+    
     try {
+        $miDB = new PDO(DSN, USER, PASSWORD);
         $errores['descripcion'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 25, 3, 1);
         $errores['contrasena'] = validacionFormularios::validarPassword($_REQUEST['contrasena'], 20, 4, 2);
 
@@ -53,7 +54,7 @@ if (isset($_REQUEST["aceptar"])) {
                 if (!in_array(exif_imagetype($_FILES['imgPerfil']['tmp_name']), $tipos_permitidos)) {
                     $errores['imgPerfil'] = "El formato del fichero no esta permitido. Introduce un JPG, PNG o JPEG";
                 } else {
-                    $formulario["imgPerfil"] = file_get_contents($_FILES['imgPerfil']['tmp_name']);
+                    $formulario["imgPerfil"] = base64_encode(file_get_contents($_FILES['imgPerfil']['tmp_name']));
                 }
             } else {
                 $errores['imgPerfil'] = "El tamaño de la imagen no puede ser superior a 5MB";
@@ -68,6 +69,7 @@ if (isset($_REQUEST["aceptar"])) {
     } catch (Exception $e) {
         echo "<p class=\"error\" >Se ha producido un error al conectar con la base de datos( " . $e->getMessage() . ", " . $e->getCode() . ")</p>";
         $entradaOk = false;
+        die();
     }
 } else {
     $entradaOk = false;

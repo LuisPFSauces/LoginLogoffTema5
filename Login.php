@@ -28,6 +28,7 @@ if (isset($_REQUEST['login'])) {
         }
     } catch (Exception $e) {
         echo "<p class=\"error\" >Se ha producido un error al conectar con la base de datos( " . $e->getMessage() . ", " . $e->getCode() . ")</p>";
+        die();
     }
 
     foreach ($errores as $error) {
