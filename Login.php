@@ -10,6 +10,7 @@ $errores = Array(
 session_start();
 if (isset($_SESSION['usuario'])) {
     header("Location: codigoPHP/Programa.php");
+    die();
 }
 
 $entradaOk = true;
@@ -28,6 +29,7 @@ if (isset($_REQUEST['login'])) {
         }
     } catch (Exception $e) {
         echo "<p class=\"error\" >Se ha producido un error al conectar con la base de datos( " . $e->getMessage() . ", " . $e->getCode() . ")</p>";
+        unset($miDB);
         die();
     }
 

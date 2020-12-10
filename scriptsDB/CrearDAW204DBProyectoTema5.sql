@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS DAW204DBProyectoTema5.Usuario(
 
 
 -- Creacion de usuario administrador de la base de datos: usuarioDAW204DBDepartamentos / paso
-CREATE USER 'usuarioDAW204DBProyectoTema5'@'%' IDENTIFIED BY 'paso';
+CREATE USER 'usuarioDAW204DBProyectoTema5'@'%' IDENTIFIED BY 'P@ssw0rd';
 
 -- Permisos para la base de datos
 GRANT ALL PRIVILEGES ON DAW204DBProyectoTema5.* TO 'usuarioDAW204DBProyectoTema5'@'%';

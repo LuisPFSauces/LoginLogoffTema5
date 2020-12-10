@@ -1,6 +1,7 @@
 <?php
 if (isset($_REQUEST['cancelar'])) {
     header("Location: ../Login.php");
+    die();
 }
 
 require_once '../config/confDBPDO.php';
@@ -68,6 +69,7 @@ if (isset($_REQUEST["aceptar"])) {
         }
     } catch (Exception $e) {
         echo "<p class=\"error\" >Se ha producido un error al conectar con la base de datos( " . $e->getMessage() . ", " . $e->getCode() . ")</p>";
+        unset($miDB);
         $entradaOk = false;
         die();
     }
@@ -89,14 +91,16 @@ if ($entradaOk) {
         ":imagen" => $formulario['imgPerfil']
     ));
 
-
+    unset($miDB);
     if ($ejecucion) {
         session_start();
         $_SESSION['FechaHoraUltimaConexion'] = null;
         $_SESSION['usuario'] = $formulario['usuario'];
         header("Location: Programa.php");
+        die();
     } else {
         header("Location: ../Login.php");
+        die();
     }
 } else {
     unset($miDB);

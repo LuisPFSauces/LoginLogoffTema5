@@ -3,15 +3,18 @@
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../Login.php");
+    die();
 }
 
 if (isset($_REQUEST['cerrar'])) {
     session_destroy();
     header("Location: ../../indexProyectoDWES.php");
+    die();
 }
 
 if (isset($_REQUEST['editar'])){
     header("Location: Editar.php");
+    die();
 }
 
 $lenguaje = Array(
