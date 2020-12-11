@@ -22,7 +22,7 @@ if (isset($_REQUEST['login'])) {
 
         $consulta = $miDB->prepare("Select * from Usuario where CodUsuario = :codigo and Password = :password");
         $ejecucion = $consulta->execute(Array(":codigo" => $_REQUEST['usuario'], ":password" => hash("sha256", $_REQUEST['usuario'] . $_REQUEST['password'])));
-        if ($consulta->rowCount() == 0) {
+        if ($consulta->rowCount() == 0 && $ejecucion) {
             $errores['login'] = "Credenciales incorrectas";
         } else if (!$ejecucion) {
             throw new Exception("Error al recuperar los usuarios \"" . $departamentos->errorInfo()[2] . "\"", $departamentos->errorInfo()[1]);
