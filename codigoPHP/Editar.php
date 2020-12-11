@@ -2,14 +2,17 @@
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../Login.php");
+    die();
 }
 
 if (isset($_REQUEST['cancelar'])) {
     header("Location: Programa.php");
+    die();
 }
 
 if (isset($_REQUEST["cambiar"])) {
     header("Location: CambiarPassword.php");
+    die();
 }
 
 $formulario = [
@@ -70,6 +73,7 @@ try {
         if( $ejecucion ){
             unset($miDB);
             header("Location: Programa.php");
+            die();
         } else {
             throw new Exception("Error al actualizar el usuario \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1]);
         }
