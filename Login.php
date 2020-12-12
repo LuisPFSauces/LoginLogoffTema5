@@ -70,6 +70,7 @@ EOF;
         <head>
             <meta charset="UTF-8">
             <title>Login</title>
+            <link href="webroot/css/estilos.css" rel="stylesheet" type="text/css">
             <style>
                 .error{
                     color: red;
@@ -83,9 +84,9 @@ EOF;
                 <input type="password" placeholder="Contraseña" name="password" >
                 <?php echo!empty($errores['password']) ? "<span class=\"error\">" . $errores['password'] . "</span>" : ""; ?><br>
                 <?php echo!empty($errores['login']) ? "<span class=\"error\">" . $errores['login'] . "</span>" : ""; ?><br>
-                <input type="submit" name="login" value="aceptar">
+                <input type="submit" name="login" value="aceptar"><br>
+                <a href="codigoPHP/Registro.php">¿No tienes cuenta?<br>Registrate</a>
             </form>
-            <a href="codigoPHP/Registro.php">¿No tienes cuenta?<br>Registrate</a>
             <?php ?>
         </body>
     </html>

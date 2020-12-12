@@ -16,7 +16,7 @@ EOF;
                 $miDB->exec($sql);
 
                
-               echo "<p style='color:green;'>CARGA INICIAL CORRECTO</p>";
+               echo "<p style='color:green;'>BORRADO CORRECTO</p>";
             }catch (PDOException $miExceptionPDO) { // Codigo que se ejecuta si hay alguna excepcion
                 echo "<p style='color:red;'>ERROR</p>";
                 echo "<p style='color:red;'>Código de error: ".$miExceptionPDO->getCode()."</p>"; // Muestra el codigo del error

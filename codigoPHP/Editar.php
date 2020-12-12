@@ -15,6 +15,30 @@ if (isset($_REQUEST["cambiar"])) {
     die();
 }
 
+require_once '../config/confDBPDO.php';
+if (isset($_REQUEST["bBorrar"])) {
+     try {
+        $miDB = new PDO(DSN, USER, PASSWORD);
+        $consulta = $miDB ->prepare("Delete from Usuario where CodUsuario = :usuario");
+        $consulta ->bindParam(":usuario", $_SESSION['usuario']);
+        $ejecucion = $consulta ->execute();
+        if ($ejecucion){
+            unset($miDB);
+            session_destroy();
+            header("Location: ../../indexProyectoDWES.php");
+            die();
+        } else {
+            throw new Exception("Error al actualizar el usuario \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1]);
+        }
+    } catch (Exception $e) {
+        unset($miDB);
+        
+        echo "<p class=\"error\" >Se ha producido un error al conectar con la base de datos( " . $e->getMessage() . ", " . $e->getCode() . ")</p>";
+        die();
+    }
+}
+
+
 $formulario = [
     "descripcion" => null,
     "imgPerfil" => null,
@@ -69,19 +93,18 @@ try {
             $consulta = $miDB->prepare($sql);
             $ejecucion = $consulta->execute([":descripcion" => $formulario['descripcion'], ":usuario" => $_REQUEST['usuario']]);
         }
-        
-        if( $ejecucion ){
+
+        if ($ejecucion) {
             unset($miDB);
             header("Location: Programa.php");
             die();
         } else {
             throw new Exception("Error al actualizar el usuario \"" . $consulta->errorInfo()[2] . "\"", $consulta->errorInfo()[1]);
         }
-        
     } else {
         $consulta = $miDB->prepare("Select * from Usuario where CodUsuario = :codigo limit 1");
         $consulta->bindParam(":codigo", $_SESSION['usuario']);
-        $ejecucion = $consulta ->execute();
+        $ejecucion = $consulta->execute();
         if ($ejecucion && $consulta->rowCount() > 0) {
             $Ousuario = $consulta->fetchObject();
             ?>
@@ -121,17 +144,25 @@ try {
                             echo $Ousuario->DescUsuario;
                         }
                         ?>"><br>
-                        <?php echo!empty($errores['descripcion']) ? "<span class=\"error\">" . $errores['descripcion'] . "</span><br>" : ""; ?>
+            <?php echo!empty($errores['descripcion']) ? "<span class=\"error\">" . $errores['descripcion'] . "</span><br>" : ""; ?>
                         <label for="fecha">Ultima Conexion</label>
                         <input type="text" id="fecha" readonly name="fecha" value="<?php echo (new DateTime)->setTimestamp($Ousuario->FechaHoraUltimaConexion)->format("d-m-Y H:i") ?>"><br>
                         <label for="conexiones">Numero de Conexiones</label>
                         <input type="text" id="conexiones" readonly name="conexiones" value="<?php echo $Ousuario->NumConexiones ?>"><br>
                         <input type="submit" name="cambiar" value="Cambiar la contraseña"><br>
+                        <input type="button" name="borrar" value="Borrar la cuenta" onclick="document.getElementById('dialogo').style.display = 'block'" ><br>
                         <article class="opciones">
                             <input type="submit" name="aceptar" value="Aceptar">
                             <input type="submit" name="cancelar" value="Cancelar">
                         </article>
-                        <?php echo!empty($errores['conexion']) ? "<span class=\"error\">" . $errores['conexion'] . "</span><br>" : ""; ?>
+                        <article class="dialogo" id="dialogo">
+                            <h2>¿Estas seguro?</h2>
+                            <p>Esto es irreversible y una vez echo no podras deshacer este cambio.</p>
+                            <p>Escribe <span id="tUsuario"><?php echo $Ousuario->CodUsuario; ?>/Borrar</span> para aceptar</p>
+                            <input type="text" name="tBorrar" id="tBorrar" oninput="borrarU(this)" autocomplete="off" ><br>
+                            <input type="submit" name="bBorrar" id="bBorrar" disabled value="Borrar Cuenta">
+                        </article>
+            <?php echo!empty($errores['conexion']) ? "<span class=\"error\">" . $errores['conexion'] . "</span><br>" : ""; ?>
                     </form>
                 </body>
             </html>

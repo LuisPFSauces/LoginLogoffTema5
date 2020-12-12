@@ -77,3 +77,13 @@ function borrar(){
     archivo.value = "";
     marco.src = "../webroot/images/perfil.jpg";
 }
+
+function borrarU(elemento){
+    var usuario = document.getElementById("tUsuario").innerHTML;
+    var boton = document.getElementById("bBorrar");
+    if (elemento.value !== usuario){
+        boton.disabled = true;
+    } else{
+        boton.disabled = false;
+    }
+}

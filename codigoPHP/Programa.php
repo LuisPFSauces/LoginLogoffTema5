@@ -31,8 +31,8 @@ if (!isset($_COOKIE['idioma'])) {
     setcookie("idioma", "es", time() + (60 * 60 * 24 * 30));
 }
 
-if (isset($_REQUEST["idioma"])) {
-    setcookie("idioma", $_REQUEST["idioma"], time() + (60 * 60 * 24 * 30));
+if (isset($_REQUEST["idiomaForm"])) {
+    setcookie("idioma", $_REQUEST["idiomaForm"], time() + (60 * 60 * 24 * 30));
     header("Refresh:0");
 }
 ?>
@@ -62,7 +62,7 @@ if (isset($_REQUEST["idioma"])) {
                 }
                 ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype = "multipart/form-data">
-                    <select name="idioma" id="idioma" onchange="this.form.submit()">
+                    <select name="idiomaForm" id="idioma" onchange="this.form.submit()">
                         <option value="es" <?php
                         if ($_COOKIE['idioma'] == "es") {
                             echo "selected";
