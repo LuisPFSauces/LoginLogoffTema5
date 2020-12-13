@@ -84,12 +84,10 @@ try {
         $sql = "Update Usuario set DescUsuario = :descripcion";
         if (!is_null($formulario["imgPerfil"])) {
             $sql .= ", ImagenUsuario = :imagen where CodUsuario = :usuario";
-            echo $sql;
             $consulta = $miDB->prepare($sql);
             $ejecucion = $consulta->execute([":descripcion" => $formulario['descripcion'], ":imagen" => $formulario['imgPerfil'], ":usuario" => $_REQUEST['usuario']]);
         } else {
             $sql .= " where CodUsuario = :usuario";
-            echo $sql;
             $consulta = $miDB->prepare($sql);
             $ejecucion = $consulta->execute([":descripcion" => $formulario['descripcion'], ":usuario" => $_REQUEST['usuario']]);
         }
