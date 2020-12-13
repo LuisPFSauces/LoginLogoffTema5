@@ -98,5 +98,8 @@ if (isset($_REQUEST["idiomaForm"])) {
             }
             ?>
         </main>
+        <footer>
+            2020-2021 - Luis Puente Fernandez - luis.puefer@educa.jcyl.es <a href=""><img src="../webroot/images/curriculum.png" alt="curriculum" width="32px"></a> <a href="https://github.com/LuisPFSauces"><img src="../webroot/images/gitHub.png" alt="gitHub" height="32px"></a>
+        </footer>
     </body>
 </html>
